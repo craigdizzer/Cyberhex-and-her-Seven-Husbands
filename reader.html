@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading — Cyberhex and Her 7 Husbands</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Pirata+One&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background-color: #0b090d;
+      color: #e6dee9;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, #281724 0%, #170f16 100%);
+      border-bottom: 1px solid #7a556e;
+    }
+    .nav-bar.bottom {
+      border-bottom: none;
+      border-top: 1px solid #7a556e;
+    }
+    .nav-btn {
+      background-color: #1c121b;
+      color: #f3eaf7;
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 5px;
+      border: 1px solid #7a556e;
+      font-family: 'Pirata One', Georgia, serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .nav-btn:hover {
+      background-color: #3a2034;
+      border-color: #b58ca8;
+    }
+    .nav-btn.hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .book-title {
+      font-family: 'Pirata One', Georgia, serif;
+      font-size: 1.15rem;
+      color: #e2d9eb;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pdf-frame {
+      flex: 1;
+      width: 100%;
+      min-height: 78vh;
+      border: none;
+      background-color: #141018;
+    }
+    .fallback-bar {
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 1rem;
+      color: #bfb3c7;
+      background-color: #120e15;
+    }
+    .fallback-bar a {
+      color: #e0b8d4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-bar">
+    <a id="prevTop" class="nav-btn" href="#">← Prev</a>
+    <a class="nav-btn" href="index.html">Library</a>
+    <a id="nextTop" class="nav-btn" href="#">Next →</a>
+  </div>
+
+  <div class="fallback-bar">
+    <span id="currentTitle"></span> · <a id="directPdfLink" href="#" target="_blank">Open raw PDF</a>
+  </div>
+
+  <iframe id="pdfViewer" class="pdf-frame" src=""></iframe>
+
+  <div class="nav-bar bottom">
+    <a id="prevBottom" class="nav-btn" href="#">← Previous Book</a>
+    <a class="nav-btn" href="index.html">All Books</a>
+    <a id="nextBottom" class="nav-btn" href="#">Next Book →</a>
+  </div>
+
+  <script>
+    const books = [
+      {
+        title: "Book 1: Love, Laundry & Total Domination",
+        file: "cyberhex_book1_a_dark_tale_of_love_laundry_and_total_domination.pdf"
+      },
+      {
+        title: "Book 2: Porridge, Pit-Sniffs & Pure Devotion",
+        file: "cyberhex_book2_porridge_pit_sniffs_and_pure_devotion.pdf"
+      },
+      {
+        title: "Book 3: Dead Zones, Demons & Devotion",
+        file: "cyberhex_book3_dead_zones_demons_and_devotion.pdf"
+      },
+      {
+        title: "Book 4: Frostlands, Fur Coats & Fake Accents",
+        file: "cyberhex_book4_frostlands_fur_coats_and_fake_accents.pdf"
+      }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    let idx = parseInt(params.get("book"), 10) - 1;
+    if (isNaN(idx) || idx < 0 || idx >= books.length) idx = 0;
+
+    const current = books[idx];
+    document.title = current.title + " — Cyberhex";
+    document.getElementById("currentTitle").textContent = current.title;
+    document.getElementById("directPdfLink").href = current.file;
+    document.getElementById("pdfViewer").src = current.file;
+
+    const prevTop = document.getElementById("prevTop");
+    const prevBottom = document.getElementById("prevBottom");
+    if (idx > 0) {
+      prevTop.href = "reader.html?book=" + idx;
+      prevBottom.href = "reader.html?book=" + idx;
+      prevBottom.textContent = "← Book " + idx;
+    } else {
+      prevTop.classList.add("hidden");
+      prevBottom.classList.add("hidden");
+    }
+
+    const nextTop = document.getElementById("nextTop");
+    const nextBottom = document.getElementById("nextBottom");
+    if (idx < books.length - 1) {
+      const nextNum = idx + 2;
+      nextTop.href = "reader.html?book=" + nextNum;
+      nextBottom.href = "reader.html?book=" + nextNum;
+      nextBottom.textContent = "Book " + nextNum + " →";
+    } else {
+      nextTop.classList.add("hidden");
+      nextBottom.classList.add("hidden");
+    }
+  </script>
+
+</body>
+</html>
