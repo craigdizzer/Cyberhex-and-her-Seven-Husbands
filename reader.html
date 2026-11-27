@@ -119,7 +119,7 @@
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-    const books = [
+        const books = [
       {
         title: "Book 1: A Dark Tale of Love, Laundry and Total Domination",
         file: "cyberhex_book1_a_dark_tale_of_love_laundry_and_total_domination.pdf"
@@ -135,8 +135,13 @@
       {
         title: "Book 4: A Dark Tale of Frostlands, Fur Coats, and Fake Accents",
         file: "cyberhex_book4_frostlands_fur_coats_and_fake_accents.pdf"
+      },
+      {
+        title: "Book 5: A Dark Tale of Beat Drops, Basslines, and Betrayal",
+        file: "cyberhex_book5_beat_drops_basslines_and_betrayal.pdf"
       }
     ];
+
 
     const params = new URLSearchParams(window.location.search);
     let idx = parseInt(params.get("book"), 10) - 1;
